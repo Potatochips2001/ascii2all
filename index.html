@@ -91,12 +91,13 @@
       }
       function a1z262ascii(x) {
         let returnValue = "";
-        for (let i = 0; i < x.length; i++) {
-          let ca = x.charAt(i);
-          let io = Number(alphabet.indexOf(ca)+1);
-          if (io == "0") io = ca;
-          returnValue += `${io} `;
+        let s = x.split(' ');
+        for (let i = 0; i < s.length; i++) {
+          let io = alphabet.charAt(s[i]-1);
+          if (io == "-1") io = s[i];
+          s[i] = io;
         }
+        returnValue = s.join(' ');
         return returnValue.trim();
       }
       function base642ascii(x) {
