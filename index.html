@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8"/>
+    <title>ascii2all</title>
+    <meta name="og:title" content="ascii2all"/>
+    <meta name="og:description" content="Convert ASCII to A1Z26, base64, binary, decimal, hex, octal"/>
+    <style>
+      body {
+        background-color: #121212;
+        color: #ccc;
+      }
+      #root {
+        margin: auto;
+        width: 50%;
+      }
+      textarea {
+        background-color: #202020;
+        color: #fff;
+        height: 50px;
+        width: 500px;
+        border-radius: 20px;
+      }
+      select {
+        background-color: #202020;
+        color: #ccc;
+      }
+      button {
+        background-color: #202020;
+        color: #ccc;
+      }
+      button:hover {
+        transform: scale(1.1);
+      }
+      select:hover {
+        transform: scale(1.1);
+      }
+    </style>
+    <script>
+      let alphabet, usrInput, ascii, a1z26, base64, binary, decimal, hex, octal, ui, usrSelect;
+      addEventListener("DOMContentLoaded", event => {
+        alphabet = "abcdefghijklmnopqrstuvwxyz";
+        ascii = document.getElementById("ascii");
+        a1z26 = document.getElementById("a1z26");
+        base64 = document.getElementById("base64");
+        binary = document.getElementById("binary");
+        decimal = document.getElementById("decimal");
+        hex = document.getElementById("hex");
+        octal = document.getElementById("octal");
+        ui = document.getElementsByClassName("usrinput");
+        usrSelect = document.getElementById("usrselect");
+      });
+      function ascii2a1z26(x) {
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) {
+          let ca = x.charAt(i).toLowerCase();
+          let io = (Number(alphabet.indexOf(ca))+1);
+          if (io == "0") io = ca;
+          returnValue += `${io} `;
+        }
+        return returnValue.trim();
+      }
+      function ascii2base64(x) {
+        let returnValue = "";
+        returnValue = btoa(x);
+        return returnValue.trim();
+      }
+      function ascii2binary(x) {
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) returnValue += `0b${x.charCodeAt(i).toString(2)} `;
+        return returnValue.trim();
+      }
+      function ascii2decimal(x) {
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) returnValue += `${x.charCodeAt(i)} `;
+        return returnValue.trim();
+      }
+      function ascii2hex(x) {
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) returnValue += `0x${x.charCodeAt(i).toString(16)} `;
+        return returnValue.trim();
+      }
+      function ascii2octal(x) {
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) {
+          let ca = x.charAt(i);
+          let currentDecimel = x.charCodeAt(i);
+          returnValue += `0o${(currentDecimel).toString(8)} `;
+        }
+        return returnValue.trim();
+      }
+      function a1z262ascii(x) {
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) {
+          let ca = x.charAt(i);
+          let io = Number(alphabet.indexOf(ca)+1);
+          if (io == "0") io = ca;
+          returnValue += `${io} `;
+        }
+        return returnValue.trim();
+      }
+      function base642ascii(x) {
+        let returnValue = "";
+        returnValue = atob(String(x));
+        return returnValue.trim();
+      }
+      function binary2ascii(x) {
+        x = x.replaceAll('0b', '');
+        let s = "";
+        let returnValue = "";
+        for (let i = 0; i < x.length; i++) {
+          s += x.charAt(i);
+        }
+        s = s.split(' ');
+        for (let i = 0; i < s.length; i++) {
+          s[i] = String(parseInt(s[i], 2));
+        }
+        for (let i = 0; i < s.length; i++) {
+          s[i] = String.fromCharCode(Number(s[i]));
+        }
+        returnValue = s.join(' ');
+        return returnValue.trim();
+      }
+      function decimal2ascii(x) {
+        let returnValue = "";
+        let ca = x.split(' ');
+        for (let i = 0; i < ca.length; i++) ca[i] = String.fromCharCode(Number(ca[i]));
+        returnValue = ca.join(' ');
+        return returnValue.trim();
+      }
+      function hex2ascii(x) {
+        x = x.replaceAll('0x', '');
+        let returnValue = "";
+        let ca = x.split(' ');
+        for (let i = 0; i < ca.length; i++) ca[i] = String(parseInt(ca[i], 16));
+        for (let i = 0; i < ca.length; i++) ca[i] = String.fromCharCode(Number(ca[i]));
+        returnValue = ca.join(' ');
+        return returnValue.trim();
+      }
+      function octal2ascii(x) {
+        x = x.replaceAll('0o', '');
+        let returnValue = "";
+        let ca = x.split(' ');
+        for (let i = 0; i < ca.length; i++) ca[i] = String(parseInt(ca[i], 8));
+        for (let i = 0; i < ca.length; i++) ca[i] = String.fromCharCode(Number(ca[i]));
+        returnValue = ca.join(' ');
+        return returnValue.trim();
+      }
+      function clearResults() {
+        for (let i = 0; i < ui.length; i++) ui[i].value = "";
+      }
+      function calculateAll(x) {
+        a1z26.value = ascii2a1z26(x);
+        base64.value = ascii2base64(x);
+        binary.value = ascii2binary(x);
+        decimal.value = ascii2decimal(x);
+        hex.value = ascii2hex(x);
+        octal.value = ascii2octal(x);
+      }
+      function returnResult() {
+        switch (usrSelect.value) {
+          case "ascii": {
+            a1z26.value = ascii2a1z26(ascii.value);
+            base64.value = ascii2base64(ascii.value);
+            binary.value = ascii2binary(ascii.value);
+            decimal.value = ascii2decimal(ascii.value);
+            hex.value = ascii2hex(ascii.value);
+            octal.value = ascii2octal(ascii.value);
+            break;
+          }
+          case "a1z26": {
+            ascii.value = a1z262ascii(ascii.value);
+            calculateAll(ascii.value);
+            break
+          }
+          case "base64": {
+            ascii.value = base642ascii(ascii.value);
+            calculateAll(ascii.value);
+            break;
+          }
+          case "binary": {
+            ascii.value = binary2ascii(ascii.value);
+            calculateAll(ascii.value);
+            break;
+          }
+          case "decimal": {
+            ascii.value = decimal2ascii(ascii.value);
+            calculateAll(ascii.value);
+            break;
+          }
+          case "hex": {
+            ascii.value = hex2ascii(ascii.value);
+            calculateAll(ascii.value);
+            break;
+          }
+          case "octal": {
+            ascii.value = octal2ascii(ascii.value);
+            calculateAll(ascii.value);
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+
+    <div id="root">
+      <button id="btn" onclick="returnResult()">Calculate Values</button>
+      <button id="btn2" onclick="clearResults();">Clear Values</button>
+      <select id="usrselect">
+        <option value="ascii">ASCII</option>
+        <option value="a1z26">A1Z26</option>
+        <option value="base64">Base64</option>
+        <option value="binary">Binary</option>
+        <option value="decimal">Decimal</option>
+        <option value="hex">Hexadecimal</option>
+        <option value="octal">Octal</option>
+      </select> <br/>
+      <h4>ASCII</h4>
+      <textarea id="ascii" placeholder="ASCII" class="usrinput"></textarea> <br/>
+      <h4>A1Z26</h4>
+      <textarea id="a1z26" placeholder="A1Z26" class="usrinput"></textarea> <br/>
+      <h4>Base64</h4>
+      <textarea id="base64" placeholder="Base64" class="usrinput"></textarea> <br/>
+      <h4>Binary</h4>
+      <textarea id="binary" placeholder="Binary" class="usrinput"></textarea> <br/>
+      <h4>Decimal</h4>
+      <textarea id="decimal" placeholder="Decimal" class="usrinput"></textarea> <br/>
+      <h4>Hex</h4>
+      <textarea id="hex" placeholder="Hexadecimal" class="usrinput"></textarea> <br/>
+      <h4>Octal</h4>
+      <textarea id="octal" placeholder="octal" class="usrinput"></textarea> <br/>
+    </div>
+
+  </body>
+</html>
