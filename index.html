@@ -119,7 +119,7 @@
         for (let i = 0; i < s.length; i++) {
           s[i] = String.fromCharCode(Number(s[i]));
         }
-        returnValue = s.join(' ');
+        returnValue = s.join('');
         return returnValue.trim();
       }
       function decimal2ascii(x) {
@@ -135,7 +135,7 @@
         let ca = x.split(' ');
         for (let i = 0; i < ca.length; i++) ca[i] = String(parseInt(ca[i], 16));
         for (let i = 0; i < ca.length; i++) ca[i] = String.fromCharCode(Number(ca[i]));
-        returnValue = ca.join(' ');
+        returnValue = ca.join('');
         return returnValue.trim();
       }
       function octal2ascii(x) {
@@ -144,7 +144,7 @@
         let ca = x.split(' ');
         for (let i = 0; i < ca.length; i++) ca[i] = String(parseInt(ca[i], 8));
         for (let i = 0; i < ca.length; i++) ca[i] = String.fromCharCode(Number(ca[i]));
-        returnValue = ca.join(' ');
+        returnValue = ca.join('');
         return returnValue.trim();
       }
       function clearResults() {
